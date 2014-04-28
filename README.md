@@ -7,8 +7,8 @@ Requirements
 ---------------
 
 * mysqldump
-* (configured)aws-cli
-    https://aws.amazon.com/cli/
+* (configured) aws-cli  
+https://aws.amazon.com/cli/
 * tar
 
 ## Usage
