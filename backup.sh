@@ -8,15 +8,16 @@ export PATH="$PATH:/usr/local/bin"
 usage()
 {
 cat << EOF
-usage: $0 options
+usage: $0 parameters
 
 This script dumps MySQL, tars it, then sends it to an Amazon S3 bucket.
 
-OPTIONS:
+PARAMETERS:
    -help   Show this message
    -u      MySQL user name
    -p      MySQL password
    -h      MySQL host <hostname><:port>
+   -d      MySQL database
    -b      Amazon S3 bucket name
 EOF
 }
@@ -24,9 +25,10 @@ EOF
 MYSQL_USER=
 MYSQL_PASSWORD=
 MYSQL_HOST=
+MYSQL_DB=
 S3_BUCKET=
 
-while getopts “u:p:h:b:” OPTION
+while getopts “u:p:h:d:b:” OPTION
 do
   case $OPTION in
     u)
@@ -38,6 +40,9 @@ do
     h)
       MYSQL_HOST=$OPTARG
       ;;
+    d)
+      MYSQL_DB=$OPTARG
+      ;;
     b)
       S3_BUCKET=$OPTARG
       ;;
@@ -48,14 +53,10 @@ do
   esac
 done
 
-if [[ -z $MYSQL_USER ]] || [[ -z $MYSQL_PASSWORD ]] || [[ -z $S3_BUCKET ]]
+if [[ -z $MYSQL_USER ]] || [[ -z $MYSQL_PASSWORD ]] || [[ -z $MYSQL_DB ]] || [[ -z $MYSQL_HOST ]] || [[ -z $S3_BUCKET ]]
 then
   usage
   exit 1
-fi
-if [[ -z $MYSQL_HOST ]]
-then
-  MYSQL_HOST="localhost:3306"
 fi
 
 # Get the directory the script is being run from
@@ -68,7 +69,7 @@ FILE_NAME="backup-$DATE"
 ARCHIVE_NAME="$FILE_NAME.tar.gz"
 
 # dump & tar
-mysqldump -u "MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" > $/DIR/backup/$FILE_NAME
+mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$MYSQL_DB" > $DIR/backup/$FILE_NAME
 tar -C $DIR/backup/ -zcvf $DIR/backup/$ARCHIVE_NAME $FILE_NAME/
 
 # Remove the backup file
