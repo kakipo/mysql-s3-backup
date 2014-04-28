@@ -26,7 +26,7 @@ MYSQL_USER=
 MYSQL_PASSWORD=
 MYSQL_HOST=
 MYSQL_DB=
-S3_BUCKET=
+S3_BUCKET_NAME=
 
 while getopts “u:p:h:d:b:” OPTION
 do
@@ -44,7 +44,7 @@ do
       MYSQL_DB=$OPTARG
       ;;
     b)
-      S3_BUCKET=$OPTARG
+      S3_BUCKET_NAME=$OPTARG
       ;;
     ?)
       usage
@@ -53,7 +53,7 @@ do
   esac
 done
 
-if [[ -z $MYSQL_USER ]] || [[ -z $MYSQL_PASSWORD ]] || [[ -z $MYSQL_DB ]] || [[ -z $MYSQL_HOST ]] || [[ -z $S3_BUCKET ]]
+if [[ -z $MYSQL_USER ]] || [[ -z $MYSQL_PASSWORD ]] || [[ -z $MYSQL_DB ]] || [[ -z $MYSQL_HOST ]] || [[ -z $S3_BUCKET_NAME ]]
 then
   usage
   exit 1
@@ -79,4 +79,4 @@ rm -r $DIR/backup/$FILE_NAME
 DATE_YYYY=$(date -u "+%Y")
 DATE_YYYYMM=$(date -u "+%Y-%m")
 
-aws s3 mv $DIR/backup/$ARCHIVE_NAME s3://$S3_BUCKET/$DATE_YYYY/$DATE_YYYYMM/$ARCHIVE_NAME
+aws s3 mv $DIR/backup/$ARCHIVE_NAME s3://$S3_BUCKET_NAME/$DATE_YYYY/$DATE_YYYYMM/$ARCHIVE_NAME

@@ -13,7 +13,7 @@ Requirements
 
 ## Usage
 
-`bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -b S3_BUCKET`
+`bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -b S3_BUCKET_NAME`
 
 ## Cron
 
@@ -21,4 +21,4 @@ Requirements
 
 Add the following line to `/etc/cron.d/db-backup` to run the script every day at midnight (UTC time)
 
-    0 0 * * * root /bin/bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -b S3_BUCKET`
+    0 0 * * * root /bin/bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -b S3_BUCKET_NAME`
