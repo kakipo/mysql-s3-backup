@@ -81,7 +81,7 @@ LATEST_DUMP_FILE="$( ls -rt $OUT_DIR | tail -1 )"
 
 echo "dumpfile: $OUT_DIR/$LATEST_DUMP_FILE"
 
-mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$MYSQL_DB" < $LATEST_DUMP_FILE
+mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$MYSQL_DB" < $OUT_DIR/$LATEST_DUMP_FILE
 
 # remove dump file
 rm $OUT_DIR/$LATEST_DUMP_FILE
