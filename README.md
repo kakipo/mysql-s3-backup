@@ -1,8 +1,7 @@
 mysql-s3-backup
 ===============
 
-Backup from MySQL to S3
-Restore from S3 to MySQL
+Backup from MySQL to S3 & Restore from S3 to MySQL
 
 Requirements
 ---------------
