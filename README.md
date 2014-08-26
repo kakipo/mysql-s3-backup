@@ -13,7 +13,7 @@ https://aws.amazon.com/cli/
 
 ## Usage
 
-`bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -d MYSQL_DATABASE -b S3_BUCKET_NAME`
+`bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -h MYSQL_HOST -d MYSQL_DATABASE -b S3_BUCKET_NAME`
 
 ## Cron
 
