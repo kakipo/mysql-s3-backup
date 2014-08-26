@@ -1,7 +1,8 @@
 mysql-s3-backup
 ===============
 
-backup MySQL to S3
+Backup from MySQL to S3
+Restore from S3 to MySQL
 
 Requirements
 ---------------
@@ -13,7 +14,13 @@ https://aws.amazon.com/cli/
 
 ## Usage
 
-`bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -h MYSQL_HOST -d MYSQL_DATABASE -b S3_BUCKET_NAME`
+### Backup
+
+`bash /path/to/backup.sh -u FROM_MYSQL_USER -p FROM_MYSQL_PASSWORD -h FROM_MYSQL_HOST -d FROM_MYSQL_DATABASE -b TO_S3_BUCKET_NAME`
+
+### Restore
+
+`bash /path/to/restore.sh -u TO_MYSQL_USER -p TO_MYSQL_PASSWORD -h TO_MYSQL_HOST -d TO_MYSQL_DATABASE -b FROM_S3_BUCKET_NAME`
 
 ## Cron
 
@@ -21,4 +28,7 @@ https://aws.amazon.com/cli/
 
 Add the following line to `/etc/cron.d/db-backup` to run the script every day at midnight (UTC time)
 
-    0 0 * * * root /bin/bash /path/to/backup.sh -u MYSQL_USER -p MYSQL_PASSWORD -o MYSQL_HOST -b S3_BUCKET_NAME`
+
+```
+0 0 * * * root /bin/bash /path/to/backup.sh -u FROM_MYSQL_USER -p FROM_MYSQL_PASSWORD -h FROM_MYSQL_HOST -d FROM_MYSQL_DATABASE -b TO_S3_BUCKET_NAME
+```
