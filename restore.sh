@@ -63,7 +63,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OUT_DIR=$DIR/restore
 echo "output dir: $OUT_DIR"
 
-LATEST_FILE_PATH=$(aws s3 ls -al s3://$S3_BUCKET_NAME --recursive | awk '{print $4}' | sort -r | head -1)
+LATEST_FILE_PATH=$(aws s3 ls s3://$S3_BUCKET_NAME --recursive | awk '{print $4}' | sort -r | head -1)
 echo "latest backup file path: s3://$S3_BUCKET_NAME/$LATEST_FILE_PATH"
 
 aws s3 cp s3://$S3_BUCKET_NAME/$LATEST_FILE_PATH $OUT_DIR/
