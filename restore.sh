@@ -9,7 +9,7 @@ usage()
 cat << EOF
 usage: $0 parameters
 
-This script dumps MySQL, tars it, then sends it to an Amazon S3 bucket.
+This script obtains backed up dump file from Amazon S3 bucket and restores it.
 
 PARAMETERS:
    -help   Show this message
@@ -64,9 +64,11 @@ OUT_DIR=$DIR/restore
 echo "output dir: $OUT_DIR"
 
 LATEST_FILE_PATH=$(aws s3 ls -al s3://$S3_BUCKET_NAME --recursive | awk '{print $4}' | sort -r | head -1)
-echo "latest backup file path: s3://$S3_BUCKET_NAME/$LATEST_FILE_PATH"
+S3_BUCKET_URL=s3://`echo $S3_BUCKET_NAME | sed -E 's/([^\/]+)(\/.+)?/\1/'`/$LATEST_FILE_PATH
 
-aws s3 cp s3://$S3_BUCKET_NAME/$LATEST_FILE_PATH $OUT_DIR/
+echo "latest backup file path: $S3_BUCKET_URL"
+
+aws s3 cp $S3_BUCKET_URL $OUT_DIR/
 
 TAR_FILE_NAME="$( ls -rt $OUT_DIR | tail -1 )"
 
